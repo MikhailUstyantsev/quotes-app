@@ -74,16 +74,37 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         searching = false
         tableView.reloadData()
     }
+    
+    
+    private func getQuote(_ category: String) {
+        self.showLoadingView()
+        NetworkManager.shared.getQuote(for: category) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let quote):
+                self.dismissLoadingView()
+                DispatchQueue.main.async {
+                    let quoteViewController = QuoteViewController(quote: quote)
+                    self.navigationController?.present(quoteViewController, animated: true)
+                }
+            case .failure(let error):
+                print(error.rawValue)
+            }
+        }
+    }
+    
+    
+    
 }
 
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if searching {
             return searchArrRes.count
+            
         } else{
             return QuotesCategories.originalCategories.count
         }
@@ -92,20 +113,30 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.reuseID, for: indexPath) as? CategoryCell else { return UITableViewCell() }
+        var category = ""
         
         if searching {
-            let category = searchArrRes[indexPath.row]
-            cell.set(category: category)
+            category = searchArrRes[indexPath.row]
         } else {
-            let category = QuotesCategories.originalCategories[indexPath.row]
-            cell.set(category: category)
+            category = QuotesCategories.originalCategories[indexPath.row]
         }
         
+        cell.set(category: category)
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        var category = ""
+        
+        if searching {
+            category = searchArrRes[indexPath.row]
+        } else {
+            category = QuotesCategories.originalCategories[indexPath.row]
+        }
+        self.getQuote(category)
     }
+    
+    
 }

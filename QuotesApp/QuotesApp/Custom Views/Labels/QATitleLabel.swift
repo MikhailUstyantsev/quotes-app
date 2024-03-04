@@ -30,6 +30,7 @@ class QATitleLabel: UILabel {
     private func configure() {
         textColor                     = .label
         adjustsFontSizeToFitWidth     = true
+        numberOfLines                 = 0
         minimumScaleFactor            = 0.9
         lineBreakMode                 = .byTruncatingTail
         translatesAutoresizingMaskIntoConstraints = false
