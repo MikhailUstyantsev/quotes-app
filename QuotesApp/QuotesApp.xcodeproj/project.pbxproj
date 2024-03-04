@@ -74,12 +74,12 @@
 		831B94DF2B95051A00F84614 /* QuotesApp */ = {
 			isa = PBXGroup;
 			children = (
+				831B94F42B95056500F84614 /* Application */,
 				831B950D2B961BD300F84614 /* Extensions */,
 				831B94F62B9508AE00F84614 /* Utilities */,
 				831B95042B96159900F84614 /* Models */,
 				831B95032B96158800F84614 /* Managers */,
 				831B94F92B950B5B00F84614 /* Custom Views */,
-				831B94F42B95056500F84614 /* Application */,
 				831B95022B950F2700F84614 /* Screens */,
 				831B94F52B95057A00F84614 /* Supporting Files */,
 			);

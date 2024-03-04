@@ -23,6 +23,8 @@ class SearchViewController: UIViewController {
     
     private func configureViewController() {
         view.backgroundColor = .systemBackground
+        title = "QuotesApp"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     
